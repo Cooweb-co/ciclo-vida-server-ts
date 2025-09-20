@@ -1,5 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import exampleRouter from './routes/user.route';
+import reviewRouter from './routes/review.route';
 
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
 const app = express();
@@ -13,6 +14,9 @@ app.get('/health', (_req: Request, res: Response) => {
 
 // Example routes
 app.use('/api', exampleRouter);
+
+// Review routes
+app.use('/api', reviewRouter);
 
 // Generic error handler
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
