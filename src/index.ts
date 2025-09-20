@@ -1,5 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
-import exampleRouter from './routes/user.route';
+import userRouter from './routes/user.route';
+import appointmentRouter from './routes/appointment.route';
 
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
 const app = express();
@@ -11,8 +12,9 @@ app.get('/health', (_req: Request, res: Response) => {
   res.json({ status: 'ok', time: new Date().toISOString() });
 });
 
-// Example routes
-app.use('/api', exampleRouter);
+// Routes
+app.use('/api/users', userRouter);
+app.use('/api/appointments', appointmentRouter);
 
 // Generic error handler
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
