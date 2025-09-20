@@ -1,4 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
+import cors from 'cors';
 
 import exampleRouter from './routes/user.route';
 import reviewRouter from './routes/review.route';
@@ -12,6 +13,14 @@ import appointmentRouter from './routes/appointment.route';
 
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
 const app = express();
+
+// Configuración de CORS - Permitir acceso público
+app.use(cors({
+  origin: '*', // Permitir todos los orígenes
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
+  credentials: false // No permitir cookies para acceso público
+}));
 
 app.use(express.json());
 
