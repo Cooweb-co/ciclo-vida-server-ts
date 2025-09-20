@@ -54,4 +54,28 @@ router.put('/recyclers/:id', RecyclerController.updateRecycler);
  */
 router.delete('/recyclers/:id', RecyclerController.deleteRecycler);
 
+/**
+ * @route GET /recyclers/:id/appointments
+ * @desc Obtener todas las citas de un reciclador
+ * @access Public
+ * @param {string} id - ID del reciclador
+ */
+router.get('/recyclers/:id/appointments', RecyclerController.getRecyclerAppointments);
+
+/**
+ * @route GET /recyclers/:id/reviews
+ * @desc Obtener todas las reseñas de un reciclador
+ * @access Public
+ * @param {string} id - ID del reciclador
+ */
+router.get('/recyclers/:id/reviews', RecyclerController.getRecyclerReviews);
+
+/**
+ * @route GET /recyclers/:id/transport-routes
+ * @desc Obtener todas las rutas de transporte de un reciclador
+ * @access Public
+ * @param {string} id - ID del reciclador
+ */
+router.get('/recyclers/:id/transport-routes', RecyclerController.getRecyclerTransportRoutes);
+
 export default router;

@@ -246,4 +246,61 @@ export class RecyclerService {
     private static toRadians(degrees: number): number {
         return degrees * (Math.PI / 180);
     }
+
+    /**
+     * Obtener citas de un reciclador específico
+     */
+    static async getRecyclerAppointments(recyclerId: string): Promise<any[]> {
+        try {
+            const appointmentsCollection = collection(db, 'appointments');
+            const q = query(appointmentsCollection, where('recicladorId', '==', recyclerId));
+            const snapshot = await getDocs(q);
+            
+            return snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+        } catch (error) {
+            console.error('Error getting recycler appointments:', error);
+            throw new Error('Error al obtener las citas del reciclador');
+        }
+    }
+
+    /**
+     * Obtener reseñas de un reciclador específico
+     */
+    static async getRecyclerReviews(recyclerId: string): Promise<any[]> {
+        try {
+            const reviewsCollection = collection(db, 'reviews');
+            const q = query(reviewsCollection, where('recicladorId', '==', recyclerId));
+            const snapshot = await getDocs(q);
+            
+            return snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+        } catch (error) {
+            console.error('Error getting recycler reviews:', error);
+            throw new Error('Error al obtener las reseñas del reciclador');
+        }
+    }
+
+    /**
+     * Obtener rutas de transporte de un reciclador específico
+     */
+    static async getRecyclerTransportRoutes(recyclerId: string): Promise<any[]> {
+        try {
+            const routesCollection = collection(db, 'transportRoutes');
+            const q = query(routesCollection, where('recicladorId', '==', recyclerId));
+            const snapshot = await getDocs(q);
+            
+            return snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }));
+        } catch (error) {
+            console.error('Error getting recycler transport routes:', error);
+            throw new Error('Error al obtener las rutas de transporte del reciclador');
+        }
+    }
 }

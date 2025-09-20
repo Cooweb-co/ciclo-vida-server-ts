@@ -456,4 +456,139 @@ export class RecyclerController {
 
         return null;
     }
+
+    /**
+     * Obtener citas de un reciclador
+     * GET /recyclers/:id/appointments
+     */
+    static async getRecyclerAppointments(req: Request, res: Response): Promise<void> {
+        try {
+            const { id } = req.params;
+
+            // Validar ID
+            if (!id || id.trim() === '') {
+                res.status(400).json({ 
+                    success: false,
+                    error: 'ID de reciclador inválido' 
+                });
+                return;
+            }
+
+            // Verificar que el reciclador existe
+            const recycler = await RecyclerService.getRecyclerById(id);
+            if (!recycler) {
+                res.status(404).json({ 
+                    success: false,
+                    error: 'Reciclador no encontrado' 
+                });
+                return;
+            }
+
+            const appointments = await RecyclerService.getRecyclerAppointments(id);
+
+            res.status(200).json({
+                success: true,
+                data: appointments,
+                count: appointments.length,
+                message: `Citas encontradas para el reciclador ${recycler.infoBase.nombre}`
+            });
+        } catch (error) {
+            console.error('Error in getRecyclerAppointments:', error);
+            res.status(500).json({ 
+                success: false,
+                error: 'Error interno del servidor',
+                message: error instanceof Error ? error.message : 'Error desconocido'
+            });
+        }
+    }
+
+    /**
+     * Obtener reseñas de un reciclador
+     * GET /recyclers/:id/reviews
+     */
+    static async getRecyclerReviews(req: Request, res: Response): Promise<void> {
+        try {
+            const { id } = req.params;
+
+            // Validar ID
+            if (!id || id.trim() === '') {
+                res.status(400).json({ 
+                    success: false,
+                    error: 'ID de reciclador inválido' 
+                });
+                return;
+            }
+
+            // Verificar que el reciclador existe
+            const recycler = await RecyclerService.getRecyclerById(id);
+            if (!recycler) {
+                res.status(404).json({ 
+                    success: false,
+                    error: 'Reciclador no encontrado' 
+                });
+                return;
+            }
+
+            const reviews = await RecyclerService.getRecyclerReviews(id);
+
+            res.status(200).json({
+                success: true,
+                data: reviews,
+                count: reviews.length,
+                message: `Reseñas encontradas para el reciclador ${recycler.infoBase.nombre}`
+            });
+        } catch (error) {
+            console.error('Error in getRecyclerReviews:', error);
+            res.status(500).json({ 
+                success: false,
+                error: 'Error interno del servidor',
+                message: error instanceof Error ? error.message : 'Error desconocido'
+            });
+        }
+    }
+
+    /**
+     * Obtener rutas de transporte de un reciclador
+     * GET /recyclers/:id/transport-routes
+     */
+    static async getRecyclerTransportRoutes(req: Request, res: Response): Promise<void> {
+        try {
+            const { id } = req.params;
+
+            // Validar ID
+            if (!id || id.trim() === '') {
+                res.status(400).json({ 
+                    success: false,
+                    error: 'ID de reciclador inválido' 
+                });
+                return;
+            }
+
+            // Verificar que el reciclador existe
+            const recycler = await RecyclerService.getRecyclerById(id);
+            if (!recycler) {
+                res.status(404).json({ 
+                    success: false,
+                    error: 'Reciclador no encontrado' 
+                });
+                return;
+            }
+
+            const routes = await RecyclerService.getRecyclerTransportRoutes(id);
+
+            res.status(200).json({
+                success: true,
+                data: routes,
+                count: routes.length,
+                message: `Rutas de transporte encontradas para el reciclador ${recycler.infoBase.nombre}`
+            });
+        } catch (error) {
+            console.error('Error in getRecyclerTransportRoutes:', error);
+            res.status(500).json({ 
+                success: false,
+                error: 'Error interno del servidor',
+                message: error instanceof Error ? error.message : 'Error desconocido'
+            });
+        }
+    }
 }

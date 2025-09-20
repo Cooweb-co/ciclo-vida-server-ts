@@ -1,0 +1,944 @@
+{
+	"info": {
+		"_postman_id": "ciclo-vida-api-collection",
+		"name": "Ciclo Vida - Complete API Collection",
+		"description": "Colección completa de APIs para el sistema Ciclo Vida - Plataforma de reciclaje con recicladores, reseñas, ubicaciones, transporte, créditos y cupones.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Health Check",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/health",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"health"
+							]
+						},
+						"description": "Verificar el estado del servidor"
+					}
+				}
+			]
+		},
+		{
+			"name": "Recyclers",
+			"item": [
+				{
+					"name": "Crear Reciclador",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"recycler_uid_123\",\n  \"zonasCobertura\": [\n    {\n      \"lat\": 4.6097,\n      \"lng\": -74.0817,\n      \"radio\": 5000\n    }\n  ],\n  \"infoBase\": {\n    \"nombre\": \"EcoRecicla Bogotá\",\n    \"telefono\": \"+57 300 123 4567\",\n    \"email\": \"contacto@ecorecicla.com\",\n    \"descripcion\": \"Servicio de reciclaje especializado en residuos electrónicos\",\n    \"tiposResiduos\": [\"electrónicos\", \"plásticos\", \"metales\"],\n    \"horarioAtencion\": \"Lunes a Viernes 8:00 AM - 6:00 PM\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/recyclers",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"recyclers"
+							]
+						}
+					}
+				},
+				{
+					"name": "Obtener Reciclador por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/recyclers/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"recyclers",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "recycler_uid_123"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Actualizar Reciclador",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"zonasCobertura\": [\n    {\n      \"lat\": 4.6097,\n      \"lng\": -74.0817,\n      \"radio\": 7000\n    }\n  ],\n  \"infoBase\": {\n    \"telefono\": \"+57 300 999 8888\",\n    \"descripcion\": \"Descripción actualizada\"\n  },\n  \"activo\": true\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/recyclers/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"recyclers",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "recycler_uid_123"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Eliminar Reciclador",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/recyclers/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"recyclers",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "recycler_uid_123"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Obtener Todos los Recicladores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/recyclers",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"recyclers"
+							]
+						}
+					}
+				},
+				{
+					"name": "Buscar Recicladores por Ubicación",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/recyclers/search/location?lat=4.6097&lng=-74.0817&maxDistance=10000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"recyclers",
+								"search",
+								"location"
+							],
+							"query": [
+								{
+									"key": "lat",
+									"value": "4.6097"
+								},
+								{
+									"key": "lng",
+									"value": "-74.0817"
+								},
+								{
+									"key": "maxDistance",
+									"value": "10000"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Reviews",
+			"item": [
+				{
+					"name": "Crear Reseña",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"usuarioId\": \"user456\",\n  \"rating\": 5,\n  \"comentario\": \"Excelente servicio de reciclaje, muy profesional\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/recyclers/:id/reviews",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"recyclers",
+								":id",
+								"reviews"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "recycler123"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Obtener Reseñas con Paginación",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/recyclers/:id/reviews?limit=5&startAfter=",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"recyclers",
+								":id",
+								"reviews"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "5"
+								},
+								{
+									"key": "startAfter",
+									"value": ""
+								}
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "recycler123"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Obtener Estadísticas de Reciclador",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/recyclers/:id/reviews/stats",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"recyclers",
+								":id",
+								"reviews",
+								"stats"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "recycler123"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Locations",
+			"item": [
+				{
+					"name": "Validar Ubicación",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/locations/validate?lat=4.6097&lng=-74.0817&radio=100",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"locations",
+								"validate"
+							],
+							"query": [
+								{
+									"key": "lat",
+									"value": "4.6097"
+								},
+								{
+									"key": "lng",
+									"value": "-74.0817"
+								},
+								{
+									"key": "radio",
+									"value": "100"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Listar Todas las Ubicaciones",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/locations?tipo=basurero",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"locations"
+							],
+							"query": [
+								{
+									"key": "tipo",
+									"value": "basurero"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Registrar Nuevo Punto",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"Chatarrería El Progreso\",\n  \"lat\": 4.6097,\n  \"lng\": -74.0817,\n  \"tipo\": \"chatarreria\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/locations",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"locations"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Transport",
+			"item": [
+				{
+					"name": "Obtener Ruta de Reciclador",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/transport/recycler/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"transport",
+								"recycler",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "recycler_456"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Asignar/Crear Ruta",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"puntos\": [\n    {\n      \"lat\": 4.6097,\n      \"lng\": -74.0817,\n      \"orden\": 1\n    },\n    {\n      \"lat\": 4.6150,\n      \"lng\": -74.0900,\n      \"orden\": 2\n    },\n    {\n      \"lat\": 4.6200,\n      \"lng\": -74.0950,\n      \"orden\": 3\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/transport/recycler/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"transport",
+								"recycler",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "recycler_456"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Obtener Todas las Rutas Activas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/transport/routes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"transport",
+								"routes"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Credits & Coupons",
+			"item": [
+				{
+					"name": "Obtener Créditos de Usuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/:id/credits",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								":id",
+								"credits"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "user_123"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Listar Todos los Cupones",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/coupons?categoria=comida&empresa=McDonald's",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"coupons"
+							],
+							"query": [
+								{
+									"key": "categoria",
+									"value": "comida"
+								},
+								{
+									"key": "empresa",
+									"value": "McDonald's"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Reclamar Cupón",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"couponId\": \"coupon_123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/users/:id/claim-coupon",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								":id",
+								"claim-coupon"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "user_123"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Obtener Cupones Reclamados por Usuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/:id/claimed-coupons",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								":id",
+								"claimed-coupons"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "user_123"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Obtener Cupón por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/coupons/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"coupons",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "coupon_123"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Obtener Historial de Créditos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/:id/credit-history",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								":id",
+								"credit-history"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "user_123"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Verificar si se Puede Reclamar Cupón",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/users/:userId/can-claim/:couponId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"users",
+								":userId",
+								"can-claim",
+								":couponId"
+							],
+							"variable": [
+								{
+									"key": "userId",
+									"value": "user_123"
+								},
+								{
+									"key": "couponId",
+									"value": "coupon_123"
+								}
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "Appointments",
+			"item": [
+				{
+					"name": "Completar Cita con Evidencias",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fotos\": [\n    \"https://storage.googleapis.com/bucket/evidencia1.jpg\",\n    \"https://storage.googleapis.com/bucket/evidencia2.jpg\",\n    \"https://storage.googleapis.com/bucket/evidencia3.jpg\"\n  ],\n  \"pesoTotal\": 25.5,\n  \"detalleMaterial\": [\n    {\n      \"tipo\": \"plastico\",\n      \"cantidad\": 10.2\n    },\n    {\n      \"tipo\": \"papel\",\n      \"cantidad\": 8.3\n    },\n    {\n      \"tipo\": \"metal\",\n      \"cantidad\": 7.0\n    }\n  ],\n  \"cantidadContenedores\": 3,\n  \"observaciones\": \"Materiales en excelente estado para reciclaje. Usuario muy colaborativo en la separación.\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/appointments/:id/complete",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"appointments",
+								":id",
+								"complete"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "appointment_123"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Crear Cita",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"clienteId\": \"user_123\",\n  \"recicladorId\": \"recycler_456\",\n  \"fecha\": \"2024-01-15T10:00:00.000Z\",\n  \"direccion\": \"Calle 123 #45-67, Bogotá\",\n  \"cantidadAproxMaterial\": 15.5,\n  \"descripcion\": \"Reciclaje de materiales plásticos y papel\",\n  \"estado\": \"pendiente\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/appointments",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"appointments"
+							]
+						}
+					}
+				},
+				{
+					"name": "Obtener Todas las Citas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/appointments",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"appointments"
+							]
+						}
+					}
+				},
+				{
+					"name": "Obtener Cita por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/appointments/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"appointments",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "appointment_123"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Actualizar Cita",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"estado\": \"confirmada\",\n  \"descripcion\": \"Descripción actualizada\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/appointments/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"appointments",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "appointment_123"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Eliminar Cita",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/appointments/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"appointments",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "appointment_123"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Obtener Citas por Estado",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/appointments/status/:estado",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"appointments",
+								"status",
+								":estado"
+							],
+							"variable": [
+								{
+									"key": "estado",
+									"value": "pendiente",
+									"description": "Estados válidos: pendiente, aprobada, rechazada, completada, cancelada"
+								}
+							]
+						},
+						"description": "Obtiene todas las citas que tienen un estado específico"
+					}
+				},
+				{
+					"name": "Aprobar Cita",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"estado\": \"aprobada\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/appointments/:id/approve-reject",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"appointments",
+								":id",
+								"approve-reject"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "appointment_123"
+								}
+							]
+						},
+						"description": "Aprobar una cita que está en estado pendiente"
+					}
+				},
+				{
+					"name": "Rechazar Cita",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"estado\": \"rechazada\",\n  \"motivoRechazo\": \"No hay disponibilidad de reciclador en la zona solicitada para la fecha indicada\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/appointments/:id/approve-reject",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"appointments",
+								":id",
+								"approve-reject"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "appointment_123"
+								}
+							]
+						},
+						"description": "Rechazar una cita que está en estado pendiente. Requiere motivo de rechazo."
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://platform-telemed-dev.uc.r.appspot.com",
+			"type": "string"
+		}
+	]
+}
