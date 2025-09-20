@@ -5,6 +5,7 @@ import recyclerRouter from './routes/recycler.route';
 import locationRouter from './routes/location.route';
 import transportRouter from './routes/transport.route';
 import creditsRouter from './routes/credits.route';
+import appointmentCompletionRouter from './routes/appointmentCompletion.route';
 
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
 const app = express();
@@ -33,6 +34,9 @@ app.use('/api', transportRouter);
 
 // Credits and Coupons routes
 app.use('/api', creditsRouter);
+
+// Appointment Completion routes
+app.use('/api', appointmentCompletionRouter);
 
 // Generic error handler
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
