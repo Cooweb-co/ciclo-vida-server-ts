@@ -109,14 +109,14 @@ export class AppointmentCompletionController {
     }
 
     /**
-     * Validar datos para completar una cita
+     * Validar datos para completar una cita (solo campos requeridos)
      */
     private static validateCompletionData(data: any): string | null {
         if (!data) {
             return 'Los datos de finalización son requeridos';
         }
 
-        // Validar fotos
+        // Validar fotos (requeridas)
         if (!data.fotos || !Array.isArray(data.fotos)) {
             return 'Las fotos son requeridas y deben ser un array';
         }
@@ -125,26 +125,15 @@ export class AppointmentCompletionController {
             return 'Debe proporcionar al menos una foto como evidencia';
         }
 
-        if (data.fotos.length > 10) {
-            return 'No se pueden subir más de 10 fotos';
-        }
-
-        // Validar URLs de fotos
+        // Validar URLs de fotos (básico)
         for (let i = 0; i < data.fotos.length; i++) {
             const foto = data.fotos[i];
             if (typeof foto !== 'string' || foto.trim() === '') {
                 return `La foto ${i + 1} debe ser una URL válida`;
             }
-
-            // Validación básica de URL
-            try {
-                new URL(foto);
-            } catch {
-                return `La foto ${i + 1} no tiene un formato de URL válido`;
-            }
         }
 
-        // Validar peso total
+        // Validar peso total (requerido)
         if (typeof data.pesoTotal !== 'number' || isNaN(data.pesoTotal)) {
             return 'El peso total debe ser un número válido';
         }
@@ -153,11 +142,7 @@ export class AppointmentCompletionController {
             return 'El peso total debe ser mayor a 0';
         }
 
-        if (data.pesoTotal > 1000) {
-            return 'El peso total no puede exceder 1000 kg';
-        }
-
-        // Validar detalle de material
+        // Validar detalle de material (requerido)
         if (!data.detalleMaterial || !Array.isArray(data.detalleMaterial)) {
             return 'El detalle de material es requerido y debe ser un array';
         }
@@ -166,36 +151,14 @@ export class AppointmentCompletionController {
             return 'Debe especificar al menos un tipo de material';
         }
 
-        if (data.detalleMaterial.length > 10) {
-            return 'No se pueden especificar más de 10 tipos de materiales';
-        }
-
-        // Validar cada material
-        let pesoTotalMateriales = 0;
-        const tiposUsados = new Set<string>();
-
+        // Validar cada material (básico)
         for (let i = 0; i < data.detalleMaterial.length; i++) {
             const material = data.detalleMaterial[i];
             const materialError = this.validateMaterial(material, i);
             if (materialError) return materialError;
-
-            // Verificar tipos duplicados
-            if (tiposUsados.has(material.tipo.toLowerCase())) {
-                return `El tipo de material '${material.tipo}' está duplicado`;
-            }
-            tiposUsados.add(material.tipo.toLowerCase());
-
-            pesoTotalMateriales += material.cantidad;
         }
 
-        // Verificar que el peso total coincida (con tolerancia del 5%)
-        const diferencia = Math.abs(pesoTotalMateriales - data.pesoTotal);
-        const tolerancia = data.pesoTotal * 0.05;
-        if (diferencia > tolerancia) {
-            return `La suma de los pesos de materiales (${pesoTotalMateriales} kg) no coincide con el peso total (${data.pesoTotal} kg)`;
-        }
-
-        // Validar cantidad de contenedores
+        // Validar cantidad de contenedores (requerido)
         if (typeof data.cantidadContenedores !== 'number' || isNaN(data.cantidadContenedores)) {
             return 'La cantidad de contenedores debe ser un número válido';
         }
@@ -204,39 +167,31 @@ export class AppointmentCompletionController {
             return 'Debe haber al menos 1 contenedor';
         }
 
-        if (data.cantidadContenedores > 50) {
-            return 'No se pueden especificar más de 50 contenedores';
-        }
-
         if (!Number.isInteger(data.cantidadContenedores)) {
             return 'La cantidad de contenedores debe ser un número entero';
         }
 
-        // Validar observaciones
+        // Validar observaciones (requeridas)
         if (!data.observaciones || typeof data.observaciones !== 'string') {
             return 'Las observaciones son requeridas y deben ser una cadena';
         }
 
-        if (data.observaciones.trim().length < 10) {
-            return 'Las observaciones deben tener al menos 10 caracteres';
-        }
-
-        if (data.observaciones.length > 1000) {
-            return 'Las observaciones no pueden exceder 1000 caracteres';
+        if (data.observaciones.trim().length === 0) {
+            return 'Las observaciones no pueden estar vacías';
         }
 
         return null;
     }
 
     /**
-     * Validar un material individual
+     * Validar un material individual (solo campos requeridos)
      */
     private static validateMaterial(material: any, index: number): string | null {
         if (!material || typeof material !== 'object') {
             return `El material ${index + 1} debe ser un objeto válido`;
         }
 
-        // Validar tipo
+        // Validar tipo (requerido)
         if (!material.tipo || typeof material.tipo !== 'string') {
             return `El tipo del material ${index + 1} es requerido y debe ser una cadena`;
         }
@@ -245,22 +200,13 @@ export class AppointmentCompletionController {
             return `El tipo del material ${index + 1} no puede estar vacío`;
         }
 
-        // Validar cantidad
+        // Validar cantidad (requerida)
         if (typeof material.cantidad !== 'number' || isNaN(material.cantidad)) {
             return `La cantidad del material ${index + 1} debe ser un número válido`;
         }
 
         if (material.cantidad <= 0) {
             return `La cantidad del material ${index + 1} debe ser mayor a 0`;
-        }
-
-        if (material.cantidad > 500) {
-            return `La cantidad del material ${index + 1} no puede exceder 500 kg`;
-        }
-
-        // Validar precisión (máximo 2 decimales)
-        if (Math.round(material.cantidad * 100) / 100 !== material.cantidad) {
-            return `La cantidad del material ${index + 1} no puede tener más de 2 decimales`;
         }
 
         return null;
