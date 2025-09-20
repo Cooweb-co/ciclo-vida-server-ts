@@ -13,7 +13,7 @@ export class UserModel {
         return users.find(user => user.id === id);
     }
 
-    static async create(userData: Omit<IUser, 'id' | 'createdAt' | 'updatedAt'>): Promise<IUser> {
+    static async create(userData: Omit<IUser, 'description' | 'createdAt' | 'updatedAt'>): Promise<IUser> {
         const now = new Date();
         const newUser: IUser = {
             ...userData,
