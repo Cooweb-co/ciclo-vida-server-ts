@@ -1,0 +1,880 @@
+{
+	"info": {
+		"_postman_id": "ciclo-vida-apis-2024",
+		"name": "Ciclo Vida - Complete API Collection",
+		"description": "Colección completa de APIs para el proyecto Ciclo Vida con todas las operaciones CRUD y consultas por usuario",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "👥 Users API",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"María González\",\n  \"email\": \"maria.gonzalez@email.com\",\n  \"phone\": \"+57 300 123 4567\",\n  \"address\": \"Calle 72 #10-34, Chapinero, Bogotá\",\n  \"coordinates\": {\n    \"lat\": 4.6533,\n    \"lng\": -74.0836\n  },\n  \"avatar\": \"https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=150\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get User by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/users/{{user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{user_id}}"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"María González Actualizada\",\n  \"phone\": \"+57 300 999 8888\",\n  \"address\": \"Nueva dirección\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/users/{{user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{user_id}}"
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/users/{{user_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{user_id}}"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get User Appointments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/users/{{user_id}}/appointments",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{user_id}}",
+								"appointments"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get User Reviews",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/users/{{user_id}}/reviews",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{user_id}}",
+								"reviews"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "♻️ Recyclers API",
+			"item": [
+				{
+					"name": "Create Recycler",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": \"recycler_001\",\n  \"zonasCobertura\": [\n    {\n      \"lat\": 4.6533,\n      \"lng\": -74.0836,\n      \"radio\": 2000\n    },\n    {\n      \"lat\": 4.6697,\n      \"lng\": -74.0648,\n      \"radio\": 1500\n    }\n  ],\n  \"infoBase\": {\n    \"nombre\": \"Ana Martínez - EcoReciclaje\",\n    \"telefono\": \"+57 310 456 7890\",\n    \"email\": \"ana@ecoreciclaje.com\",\n    \"descripcion\": \"Especialistas en reciclaje de papel, cartón, plástico y vidrio. Servicio puerta a puerta en Chapinero y Zona Rosa.\",\n    \"tiposResiduos\": [\"Papel\", \"Cartón\", \"Plástico\", \"Vidrio\"],\n    \"horarioAtencion\": \"Lunes a Viernes: 8:00 AM - 6:00 PM, Sábados: 8:00 AM - 2:00 PM\",\n    \"sitioWeb\": \"https://ecoreciclaje.com\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/recyclers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"recyclers"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get All Recyclers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/recyclers",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"recyclers"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Recycler by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/recyclers/{{recycler_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"recyclers",
+								"{{recycler_id}}"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Recycler",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"infoBase\": {\n    \"nombre\": \"Ana Martínez - EcoReciclaje Pro\",\n    \"descripcion\": \"Descripción actualizada del reciclador\",\n    \"horarioAtencion\": \"Lunes a Domingo: 7:00 AM - 8:00 PM\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/recyclers/{{recycler_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"recyclers",
+								"{{recycler_id}}"
+							]
+						}
+					}
+				},
+				{
+					"name": "Delete Recycler",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/recyclers/{{recycler_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"recyclers",
+								"{{recycler_id}}"
+							]
+						}
+					}
+				},
+				{
+					"name": "Search Recyclers by Location",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/recyclers/search/location?lat=4.6533&lng=-74.0836&maxDistance=5000",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"recyclers",
+								"search",
+								"location"
+							],
+							"query": [
+								{
+									"key": "lat",
+									"value": "4.6533"
+								},
+								{
+									"key": "lng",
+									"value": "-74.0836"
+								},
+								{
+									"key": "maxDistance",
+									"value": "5000"
+								}
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Recycler Appointments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/recyclers/{{recycler_id}}/appointments",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"recyclers",
+								"{{recycler_id}}",
+								"appointments"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Recycler Reviews",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/recyclers/{{recycler_id}}/reviews",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"recyclers",
+								"{{recycler_id}}",
+								"reviews"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Recycler Transport Routes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/recyclers/{{recycler_id}}/transport-routes",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"recyclers",
+								"{{recycler_id}}",
+								"transport-routes"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "📍 Locations API",
+			"item": [
+				{
+					"name": "Create Location",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"Chapinero Norte\",\n  \"direccion\": \"Calle 72 con Carrera 11\",\n  \"coordenadas\": {\n    \"lat\": 4.6533,\n    \"lng\": -74.0836\n  },\n  \"ciudad\": \"Bogotá\",\n  \"departamento\": \"Cundinamarca\",\n  \"codigoPostal\": \"110221\",\n  \"descripcion\": \"Zona residencial y comercial del norte de Chapinero\",\n  \"tipoZona\": \"Residencial\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/locations",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"locations"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get All Locations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/locations",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"locations"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Location by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/locations/{{location_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"locations",
+								"{{location_id}}"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "📅 Appointments API",
+			"item": [
+				{
+					"name": "Create Appointment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"clienteId\": \"{{user_id}}\",\n  \"recicladorId\": \"{{recycler_id}}\",\n  \"fecha\": {\n    \"_seconds\": 1708012800,\n    \"_nanoseconds\": 0\n  },\n  \"direccion\": \"Calle 72 #10-34, Chapinero, Bogotá\",\n  \"cantidadAproxMaterial\": 15,\n  \"descripcion\": \"Cajas de cartón, periódicos y botellas plásticas de mudanza\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/appointments",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"appointments"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get All Appointments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/appointments",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"appointments"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Appointment by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/appointments/{{appointment_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"appointments",
+								"{{appointment_id}}"
+							]
+						}
+					}
+				},
+				{
+					"name": "Update Appointment",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"direccion\": \"Nueva dirección actualizada\",\n  \"cantidadAproxMaterial\": 20,\n  \"descripcion\": \"Descripción actualizada del material\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/appointments/{{appointment_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"appointments",
+								"{{appointment_id}}"
+							]
+						}
+					}
+				},
+				{
+					"name": "Complete Appointment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"fotos\": [\n    \"https://storage.googleapis.com/bucket/evidencia1.jpg\",\n    \"https://storage.googleapis.com/bucket/evidencia2.jpg\"\n  ],\n  \"pesoTotal\": 25.5,\n  \"detalleMaterial\": [\n    {\n      \"tipo\": \"plastico\",\n      \"cantidad\": 10.2\n    },\n    {\n      \"tipo\": \"papel\",\n      \"cantidad\": 8.3\n    },\n    {\n      \"tipo\": \"metal\",\n      \"cantidad\": 7.0\n    }\n  ],\n  \"cantidadContenedores\": 3,\n  \"observaciones\": \"Materiales en excelente estado para reciclaje. Usuario muy colaborativo en la separación.\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/appointments/{{appointment_id}}/complete",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"appointments",
+								"{{appointment_id}}",
+								"complete"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "⭐ Reviews API",
+			"item": [
+				{
+					"name": "Create Review",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"usuarioId\": \"{{user_id}}\",\n  \"rating\": 5,\n  \"comentario\": \"Excelente servicio, muy puntual y amable. Ana llegó exactamente a la hora acordada y manejó todos los materiales con mucho cuidado. ¡Recomendado 100%!\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/recyclers/{{recycler_id}}/reviews",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"recyclers",
+								"{{recycler_id}}",
+								"reviews"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Recycler Reviews",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/recyclers/{{recycler_id}}/reviews",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"recyclers",
+								"{{recycler_id}}",
+								"reviews"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "🎫 Coupons & Credits API",
+			"item": [
+				{
+					"name": "Get All Coupons",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/coupons",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"coupons"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Coupon by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/coupons/{{coupon_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"coupons",
+								"{{coupon_id}}"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get User Credits",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/users/{{user_id}}/credits",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{user_id}}",
+								"credits"
+							]
+						}
+					}
+				},
+				{
+					"name": "Claim Coupon",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"couponId\": \"{{coupon_id}}\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/users/{{user_id}}/claim-coupon",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{user_id}}",
+								"claim-coupon"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get User Claimed Coupons",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/users/{{user_id}}/claimed-coupons",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{user_id}}",
+								"claimed-coupons"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get User Credit History",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/users/{{user_id}}/credit-history",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{user_id}}",
+								"credit-history"
+							]
+						}
+					}
+				},
+				{
+					"name": "Check Can Claim Coupon",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/users/{{user_id}}/can-claim/{{coupon_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{user_id}}",
+								"can-claim",
+								"{{coupon_id}}"
+							]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "🚛 Transport API",
+			"item": [
+				{
+					"name": "Create/Update Transport Route",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"puntos\": [\n    {\n      \"lat\": 4.6533,\n      \"lng\": -74.0836,\n      \"orden\": 1,\n      \"direccion\": \"Calle 72 #10-34, Chapinero\"\n    },\n    {\n      \"lat\": 4.6697,\n      \"lng\": -74.0648,\n      \"orden\": 2,\n      \"direccion\": \"Carrera 15 #85-20, Zona Rosa\"\n    }\n  ],\n  \"tipoVehiculo\": \"Camión pequeño\",\n  \"capacidadMaxima\": 500\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/transport/recycler/{{recycler_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"transport",
+								"recycler",
+								"{{recycler_id}}"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get All Transport Routes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/transport/routes",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"transport",
+								"routes"
+							]
+						}
+					}
+				},
+				{
+					"name": "Get Route by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/transport/routes/{{route_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"transport",
+								"routes",
+								"{{route_id}}"
+							]
+						}
+					}
+				},
+				{
+					"name": "Optimize Route",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"puntoInicio\": {\n    \"lat\": 4.6533,\n    \"lng\": -74.0836,\n    \"direccion\": \"Punto de inicio\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/transport/routes/{{route_id}}/optimize",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"transport",
+								"routes",
+								"{{route_id}}",
+								"optimize"
+							]
+						}
+					}
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "https://platform-telemed-dev.uc.r.appspot.com",
+			"type": "string"
+		},
+		{
+			"key": "user_id",
+			"value": "user_example_123",
+			"type": "string"
+		},
+		{
+			"key": "recycler_id",
+			"value": "recycler_001",
+			"type": "string"
+		},
+		{
+			"key": "location_id",
+			"value": "location_example_123",
+			"type": "string"
+		},
+		{
+			"key": "appointment_id",
+			"value": "appointment_example_123",
+			"type": "string"
+		},
+		{
+			"key": "coupon_id",
+			"value": "coupon_example_123",
+			"type": "string"
+		},
+		{
+			"key": "route_id",
+			"value": "route_example_123",
+			"type": "string"
+		}
+	]
+}

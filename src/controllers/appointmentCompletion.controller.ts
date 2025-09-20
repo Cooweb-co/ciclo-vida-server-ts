@@ -10,11 +10,16 @@ export class AppointmentCompletionController {
      */
     static async completeAppointment(req: Request, res: Response): Promise<void> {
         try {
+            console.log('🚀 [CONTROLLER] Iniciando completeAppointment');
             const { id: appointmentId } = req.params;
             const completionData: ICompleteAppointmentRequest = req.body;
+            
+            console.log('🔄 [CONTROLLER] Parámetros recibidos:', { appointmentId });
+            console.log('🔄 [CONTROLLER] Datos del body:', completionData);
 
             // Validar ID de la cita
             if (!appointmentId || appointmentId.trim() === '') {
+                console.log('❌ [CONTROLLER] ID de cita inválido');
                 res.status(400).json({ 
                     success: false,
                     error: 'ID de cita inválido' 
@@ -23,8 +28,10 @@ export class AppointmentCompletionController {
             }
 
             // Validar datos de entrada
+            console.log('🔄 [CONTROLLER] Validando datos de entrada...');
             const validationError = AppointmentCompletionController.validateCompletionData(completionData);
             if (validationError) {
+                console.log('❌ [CONTROLLER] Error de validación:', validationError);
                 res.status(400).json({ 
                     success: false,
                     error: 'Datos de entrada inválidos', 
@@ -32,10 +39,14 @@ export class AppointmentCompletionController {
                 });
                 return;
             }
+            console.log('✅ [CONTROLLER] Validación exitosa');
 
             // Verificar si la cita puede ser completada
+            console.log('🔄 [CONTROLLER] Verificando si la cita puede ser completada...');
             const canComplete = await AppointmentCompletionService.canCompleteAppointment(appointmentId);
+            console.log('🔄 [CONTROLLER] Resultado de verificación:', canComplete);
             if (!canComplete.canComplete) {
+                console.log('❌ [CONTROLLER] La cita no puede ser completada:', canComplete.reason);
                 res.status(400).json({ 
                     success: false,
                     error: 'No se puede completar la cita',
@@ -45,10 +56,12 @@ export class AppointmentCompletionController {
             }
 
             // Completar la cita
+            console.log('🔄 [CONTROLLER] Llamando al servicio para completar la cita...');
             const result = await AppointmentCompletionService.completeAppointment(
                 appointmentId, 
                 completionData
             );
+            console.log('✅ [CONTROLLER] Cita completada exitosamente:', result);
 
             res.status(200).json({
                 success: true,
@@ -60,10 +73,12 @@ export class AppointmentCompletionController {
                 }
             });
         } catch (error) {
-            console.error('Error in completeAppointment:', error);
+            console.error('❌ [CONTROLLER] Error en completeAppointment:', error);
+            console.error('❌ [CONTROLLER] Stack trace:', error instanceof Error ? error.stack : 'No stack trace');
             
             if (error instanceof Error) {
                 if (error.message.includes('no encontrada')) {
+                    console.log('❌ [CONTROLLER] Cita no encontrada');
                     res.status(404).json({ 
                         success: false,
                         error: 'Cita no encontrada',
@@ -74,6 +89,7 @@ export class AppointmentCompletionController {
 
                 if (error.message.includes('ya está completada') || 
                     error.message.includes('cancelada')) {
+                    console.log('❌ [CONTROLLER] Estado de cita inválido');
                     res.status(409).json({ 
                         success: false,
                         error: 'Estado de cita inválido',
@@ -83,6 +99,7 @@ export class AppointmentCompletionController {
                 }
             }
 
+            console.log('❌ [CONTROLLER] Error interno del servidor');
             res.status(500).json({ 
                 success: false,
                 error: 'Error interno del servidor',
