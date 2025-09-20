@@ -1,10 +1,14 @@
 import express, { Request, Response, NextFunction } from 'express';
+
 import exampleRouter from './routes/user.route';
 import reviewRouter from './routes/review.route';
 import recyclerRouter from './routes/recycler.route';
 import locationRouter from './routes/location.route';
 import transportRouter from './routes/transport.route';
 import creditsRouter from './routes/credits.route';
+import userRouter from './routes/user.route';
+import appointmentRouter from './routes/appointment.route';
+
 
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
 const app = express();
@@ -16,8 +20,9 @@ app.get('/health', (_req: Request, res: Response) => {
   res.json({ status: 'ok', time: new Date().toISOString() });
 });
 
-// Example routes
-app.use('/api', exampleRouter);
+// Routes
+app.use('/api/users', userRouter);
+app.use('/api/appointments', appointmentRouter);
 
 // Review routes
 app.use('/api', reviewRouter);
