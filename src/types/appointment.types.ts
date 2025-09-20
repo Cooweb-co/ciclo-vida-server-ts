@@ -8,6 +8,7 @@ export interface Appointment {
     direccion: string;
     cantidadAproxMaterial: number;
     descripcion: string;
+    materials: string[]; // Array de nombres de materiales
     estado: 'pendiente' | 'aprobada' | 'rechazada' | 'completada' | 'cancelada';
     fechaCreacion?: Timestamp;
     fechaActualizacion?: Timestamp;

@@ -12,14 +12,37 @@ import { Appointment, EstadoAppointment, ApproveRejectRequest } from '../types/a
 
 export const createAppointmentHandler = async (req: Request, res: Response): Promise<void> => {
     try {
-        const appointment = req.body as Omit<Appointment, 'id'>;
+        const appointmentData = req.body;
+        
+        // Validar el campo materials
+        const validationError = validateAppointmentData(appointmentData);
+        if (validationError) {
+            res.status(400).json({ 
+                success: false,
+                error: 'Datos de entrada inválidos',
+                message: validationError 
+            });
+            return;
+        }
+
+        const appointment = appointmentData as Omit<Appointment, 'id'>;
         const newAppointment = await createAppointment(appointment);
-        res.status(201).json({ id: newAppointment.id });
+        res.status(201).json({ 
+            success: true,
+            data: { id: newAppointment.id },
+            message: 'Cita creada exitosamente'
+        });
     } catch (error) {
         if (error instanceof Error) {
-            res.status(400).json({ message: error.message });
+            res.status(400).json({ 
+                success: false,
+                error: error.message 
+            });
         } else {
-            res.status(500).json({ message: 'An unexpected error occurred' });
+            res.status(500).json({ 
+                success: false,
+                error: 'Error interno del servidor' 
+            });
         }
     }
 };
@@ -50,14 +73,55 @@ export const getAppointmentByIdHandler = async (req: Request, res: Response): Pr
 export const updateAppointmentHandler = async (req: Request, res: Response): Promise<void> => {
     try {
         const { id } = req.params;
-        const appointment = req.body as Partial<Appointment>;
-        await updateAppointment(id, appointment);
-        res.status(200).json({ message: 'Appointment updated successfully' });
+        const appointmentData = req.body as Partial<Appointment>;
+        
+        // Si se está actualizando materials, validar que sea un array válido
+        if (appointmentData.materials !== undefined) {
+            if (!Array.isArray(appointmentData.materials)) {
+                res.status(400).json({ 
+                    success: false,
+                    error: 'Los materiales deben ser un array' 
+                });
+                return;
+            }
+            
+            if (appointmentData.materials.length === 0) {
+                res.status(400).json({ 
+                    success: false,
+                    error: 'Debe especificar al menos un tipo de material' 
+                });
+                return;
+            }
+            
+            // Validar cada material
+            for (let i = 0; i < appointmentData.materials.length; i++) {
+                const material = appointmentData.materials[i];
+                if (typeof material !== 'string' || material.trim().length === 0) {
+                    res.status(400).json({ 
+                        success: false,
+                        error: `El material ${i + 1} debe ser una cadena de texto no vacía` 
+                    });
+                    return;
+                }
+            }
+        }
+        
+        await updateAppointment(id, appointmentData);
+        res.status(200).json({ 
+            success: true,
+            message: 'Cita actualizada exitosamente' 
+        });
     } catch (error) {
         if (error instanceof Error) {
-            res.status(400).json({ message: error.message });
+            res.status(400).json({ 
+                success: false,
+                error: error.message 
+            });
         } else {
-            res.status(500).json({ message: 'Failed to update appointment' });
+            res.status(500).json({ 
+                success: false,
+                error: 'Error interno del servidor' 
+            });
         }
     }
 };
@@ -207,6 +271,80 @@ const validateApproveRejectData = (data: any): string | null => {
 
         if (data.motivoRechazo.length > 500) {
             return 'El motivo de rechazo no puede exceder 500 caracteres';
+        }
+    }
+
+    return null;
+};
+
+/**
+ * Validar datos para crear una cita
+ */
+const validateAppointmentData = (data: any): string | null => {
+    if (!data) {
+        return 'Los datos de la cita son requeridos';
+    }
+
+    // Validar clienteId
+    if (!data.clienteId || typeof data.clienteId !== 'string') {
+        return 'El ID del cliente es requerido';
+    }
+
+    // Validar recicladorId
+    if (!data.recicladorId || typeof data.recicladorId !== 'string') {
+        return 'El ID del reciclador es requerido';
+    }
+
+    // Validar fecha
+    if (!data.fecha) {
+        return 'La fecha es requerida';
+    }
+
+    // Validar direccion
+    if (!data.direccion || typeof data.direccion !== 'string') {
+        return 'La dirección es requerida';
+    }
+
+    if (data.direccion.trim().length === 0) {
+        return 'La dirección no puede estar vacía';
+    }
+
+    // Validar cantidadAproxMaterial
+    if (typeof data.cantidadAproxMaterial !== 'number' || isNaN(data.cantidadAproxMaterial)) {
+        return 'La cantidad aproximada de material debe ser un número válido';
+    }
+
+    if (data.cantidadAproxMaterial <= 0) {
+        return 'La cantidad aproximada de material debe ser mayor a 0';
+    }
+
+    // Validar descripcion
+    if (!data.descripcion || typeof data.descripcion !== 'string') {
+        return 'La descripción es requerida';
+    }
+
+    if (data.descripcion.trim().length === 0) {
+        return 'La descripción no puede estar vacía';
+    }
+
+    // Validar materials (nuevo campo)
+    if (!data.materials || !Array.isArray(data.materials)) {
+        return 'Los materiales son requeridos y deben ser un array';
+    }
+
+    if (data.materials.length === 0) {
+        return 'Debe especificar al menos un tipo de material';
+    }
+
+    // Validar cada material en el array
+    for (let i = 0; i < data.materials.length; i++) {
+        const material = data.materials[i];
+        if (typeof material !== 'string') {
+            return `El material ${i + 1} debe ser una cadena de texto`;
+        }
+
+        if (material.trim().length === 0) {
+            return `El material ${i + 1} no puede estar vacío`;
         }
     }
 

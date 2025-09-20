@@ -222,26 +222,29 @@ export const mockAppointments = [
   {
     clienteId: 'user_001',
     recicladorId: 'recycler_001',
-    fecha: createTimestamp('2024-02-15T10:00:00Z'),
+    fecha: createTimestamp('2024-02-20T10:00:00Z'),
     direccion: 'Calle 72 #10-34, Chapinero, Bogotá',
     cantidadAproxMaterial: 15,
-    descripcion: 'Cajas de cartón, periódicos y botellas plásticas de mudanza'
+    descripcion: 'Cajas de cartón, periódicos y botellas plásticas de mudanza',
+    materials: ['Cartón', 'Papel', 'Plástico']
   },
   {
     clienteId: 'user_002',
     recicladorId: 'recycler_002',
-    fecha: createTimestamp('2024-02-16T14:00:00Z'),
+    fecha: createTimestamp('2024-02-21T14:30:00Z'),
     direccion: 'Carrera 15 #85-20, Zona Rosa, Bogotá',
     cantidadAproxMaterial: 8,
-    descripcion: 'Botellas de vidrio y latas de aluminio'
+    descripcion: 'Latas de aluminio y vidrio de evento familiar',
+    materials: ['Metal', 'Vidrio']
   },
   {
     clienteId: 'user_003',
-    recicladorId: 'recycler_003',
-    fecha: createTimestamp('2024-02-17T09:00:00Z'),
-    direccion: 'Calle 11 #3-45, La Candelaria, Bogotá',
+    recicladorId: 'recycler_001',
+    fecha: createTimestamp('2024-02-22T09:15:00Z'),
+    direccion: 'Carrera 7 #45-20, Centro, Bogotá',
     cantidadAproxMaterial: 25,
-    descripcion: 'Residuos orgánicos de restaurante y papel de oficina'
+    descripcion: 'Material de oficina: papel, cartón y algunos componentes electrónicos',
+    materials: ['Papel', 'Cartón', 'Electrónico']
   },
   {
     clienteId: 'user_004',
@@ -249,7 +252,8 @@ export const mockAppointments = [
     fecha: createTimestamp('2024-02-18T16:00:00Z'),
     direccion: 'Carrera 7 #63-44, Chapinero, Bogotá',
     cantidadAproxMaterial: 12,
-    descripcion: 'Equipos electrónicos viejos y cables'
+    descripcion: 'Equipos electrónicos viejos y cables',
+    materials: ['Electrónico', 'Metal']
   },
   {
     clienteId: 'user_005',
@@ -257,7 +261,8 @@ export const mockAppointments = [
     fecha: createTimestamp('2024-02-19T11:30:00Z'),
     direccion: 'Calle 127 #15-28, Suba, Bogotá',
     cantidadAproxMaterial: 20,
-    descripcion: 'Cartón, papel y plásticos de oficina'
+    descripcion: 'Cartón, papel y plásticos de oficina',
+    materials: ['Cartón', 'Papel', 'Plástico']
   }
 ];
 

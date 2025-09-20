@@ -127,6 +127,7 @@ export const getUserAppointments = async (userId: string): Promise<Appointment[]
             direccion: data.direccion,
             cantidadAproxMaterial: data.cantidadAproxMaterial,
             descripcion: data.descripcion,
+            materials: data.materials || [], // Incluir el nuevo campo materials
             estado: data.estado,
             fechaCreacion: data.fechaCreacion,
             fechaActualizacion: data.fechaActualizacion,
