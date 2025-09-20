@@ -16,9 +16,12 @@ export const createAppointment = async (appointment: Omit<Appointment, 'id'>): P
         throw new Error(`Client with id ${appointment.clienteId} does not exist.`);
     }
 
-    const recyclerExists = await validateDocumentExists('recyclers', appointment.recicladorId);
-    if (!recyclerExists) {
-        throw new Error(`Recycler with id ${appointment.recicladorId} does not exist.`);
+    // Validar reciclador solo si se proporciona
+    if (appointment.recicladorId) {
+        const recyclerExists = await validateDocumentExists('recyclers', appointment.recicladorId);
+        if (!recyclerExists) {
+            throw new Error(`Recycler with id ${appointment.recicladorId} does not exist.`);
+        }
     }
 
     // Asegurar que las citas nuevas siempre se crean con estado 'pendiente'

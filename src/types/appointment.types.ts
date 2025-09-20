@@ -3,7 +3,7 @@ import { Timestamp } from 'firebase/firestore';
 export interface Appointment {
     id?: string;
     clienteId: string;
-    recicladorId: string;
+    recicladorId?: string; // Opcional - se puede asignar después
     fecha: Timestamp;
     direccion: string;
     cantidadAproxMaterial: number;

@@ -290,10 +290,6 @@ const validateAppointmentData = (data: any): string | null => {
         return 'El ID del cliente es requerido';
     }
 
-    // Validar recicladorId
-    if (!data.recicladorId || typeof data.recicladorId !== 'string') {
-        return 'El ID del reciclador es requerido';
-    }
 
     // Validar fecha
     if (!data.fecha) {

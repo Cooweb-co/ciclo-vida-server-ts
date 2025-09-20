@@ -437,7 +437,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"clienteId\": \"{{user_id}}\",\n  \"recicladorId\": \"{{recycler_id}}\",\n  \"fecha\": {\n    \"_seconds\": 1708012800,\n    \"_nanoseconds\": 0\n  },\n  \"direccion\": \"Calle 72 #10-34, Chapinero, Bogotá\",\n  \"cantidadAproxMaterial\": 15,\n  \"descripcion\": \"Cajas de cartón, periódicos y botellas plásticas de mudanza\",\n  \"materials\": [\"Cartón\", \"Papel\", \"Plástico\"]\n}"
+							"raw": "{\n  \"clienteId\": \"{{user_id}}\",\n  \"fecha\": {\n    \"_seconds\": 1708012800,\n    \"_nanoseconds\": 0\n  },\n  \"direccion\": \"Calle 72 #10-34, Chapinero, Bogotá\",\n  \"cantidadAproxMaterial\": 15,\n  \"descripcion\": \"Cajas de cartón, periódicos y botellas plásticas de mudanza\",\n  \"materials\": [\"Cartón\", \"Papel\", \"Plástico\"]\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/api/appointments",
