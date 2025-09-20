@@ -8,5 +8,15 @@ export interface Appointment {
     direccion: string;
     cantidadAproxMaterial: number;
     descripcion: string;
-    estado: 'pendiente' | 'completada';
+    estado: 'pendiente' | 'aprobada' | 'rechazada' | 'completada' | 'cancelada';
+    fechaCreacion?: Timestamp;
+    fechaActualizacion?: Timestamp;
+    motivoRechazo?: string; // Solo se llena cuando el estado es 'rechazada'
+}
+
+export type EstadoAppointment = 'pendiente' | 'aprobada' | 'rechazada' | 'completada' | 'cancelada';
+
+export interface ApproveRejectRequest {
+    estado: 'aprobada' | 'rechazada';
+    motivoRechazo?: string; // Requerido solo cuando estado es 'rechazada'
 }

@@ -1,6 +1,6 @@
-import { collection, addDoc, getDocs, getDoc, doc, updateDoc, deleteDoc, DocumentReference } from 'firebase/firestore';
+import { collection, addDoc, getDocs, getDoc, doc, updateDoc, deleteDoc, DocumentReference, query, where, serverTimestamp } from 'firebase/firestore';
 import { db } from './FirebaseService';
-import { Appointment } from '../types/appointment.types';
+import { Appointment, EstadoAppointment, ApproveRejectRequest } from '../types/appointment.types';
 
 const appointmentsCollection = collection(db, 'appointments');
 
@@ -21,7 +21,15 @@ export const createAppointment = async (appointment: Omit<Appointment, 'id'>): P
         throw new Error(`Recycler with id ${appointment.recicladorId} does not exist.`);
     }
 
-    return await addDoc(appointmentsCollection, appointment);
+    // Asegurar que las citas nuevas siempre se crean con estado 'pendiente'
+    const appointmentData = {
+        ...appointment,
+        estado: 'pendiente' as EstadoAppointment,
+        fechaCreacion: serverTimestamp(),
+        fechaActualizacion: serverTimestamp()
+    };
+
+    return await addDoc(appointmentsCollection, appointmentData);
 };
 
 export const getAppointments = async (): Promise<Appointment[]> => {
@@ -54,10 +62,67 @@ export const updateAppointment = async (id: string, appointment: Partial<Appoint
     }
 
     const docRef = doc(db, 'appointments', id);
-    await updateDoc(docRef, appointment);
+    const updateData = {
+        ...appointment,
+        fechaActualizacion: serverTimestamp()
+    };
+    await updateDoc(docRef, updateData);
 };
 
 export const deleteAppointment = async (id: string): Promise<void> => {
     const docRef = doc(db, 'appointments', id);
     await deleteDoc(docRef);
+};
+
+/**
+ * Obtener citas por estado
+ */
+export const getAppointmentsByStatus = async (estado: EstadoAppointment): Promise<Appointment[]> => {
+    const q = query(appointmentsCollection, where('estado', '==', estado));
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Appointment));
+};
+
+/**
+ * Aprobar o rechazar una cita
+ */
+export const approveOrRejectAppointment = async (id: string, approveRejectData: ApproveRejectRequest): Promise<Appointment> => {
+    // Verificar que la cita existe
+    const appointment = await getAppointmentById(id);
+    if (!appointment) {
+        throw new Error('Cita no encontrada');
+    }
+
+    // Verificar que la cita está en estado pendiente
+    if (appointment.estado !== 'pendiente') {
+        throw new Error(`No se puede cambiar el estado de una cita que está en estado '${appointment.estado}'. Solo se pueden aprobar/rechazar citas pendientes.`);
+    }
+
+    // Validar que si se rechaza, se proporcione un motivo
+    if (approveRejectData.estado === 'rechazada' && (!approveRejectData.motivoRechazo || approveRejectData.motivoRechazo.trim() === '')) {
+        throw new Error('El motivo de rechazo es requerido cuando se rechaza una cita');
+    }
+
+    // Preparar datos de actualización
+    const updateData: any = {
+        estado: approveRejectData.estado,
+        fechaActualizacion: serverTimestamp()
+    };
+
+    // Solo agregar motivoRechazo si se está rechazando
+    if (approveRejectData.estado === 'rechazada') {
+        updateData.motivoRechazo = approveRejectData.motivoRechazo;
+    }
+
+    // Actualizar la cita
+    const docRef = doc(db, 'appointments', id);
+    await updateDoc(docRef, updateData);
+
+    // Retornar la cita actualizada
+    const updatedAppointment = await getAppointmentById(id);
+    if (!updatedAppointment) {
+        throw new Error('Error al obtener la cita actualizada');
+    }
+
+    return updatedAppointment;
 };
