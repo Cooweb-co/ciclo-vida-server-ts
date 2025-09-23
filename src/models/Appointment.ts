@@ -27,6 +27,7 @@ export const createAppointment = async (appointment: Omit<Appointment, 'id'>): P
     // Asegurar que las citas nuevas siempre se crean con estado 'pendiente'
     const appointmentData = {
         ...appointment,
+        recicladorId: "DKX5vga5BjPWnq8v0ylq",
         estado: 'pendiente' as EstadoAppointment,
         fechaCreacion: serverTimestamp(),
         fechaActualizacion: serverTimestamp()
